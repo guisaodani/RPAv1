@@ -12,15 +12,31 @@ namespace RpaBot.Bot
     {
         private IPage? _page;
         private IBrowser? _browser;
+        private IBrowserContext? _context;
 
         public async Task StarAsync()
         {
             var playwright = await Playwright.CreateAsync();
             _browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
             {
-                Headless = !Settings.ShowBrowser
+                Headless = !Settings.ShowBrowser,
+                Args = new[]
+                {
+                    "--disable-blink-features=AutomationControlled",
+                    "--no-sandbox",
+                    "--disable-infobars",
+                    "--disable-dev-shm-usage"
+                }
+            });
+
+            var context = await _browser.NewContextAsync(new BrowserNewContextOptions
+            {
+                UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+                ViewportSize = new ViewportSize { Width = 1280, Height = 720 }
             });
             _page = await _browser.NewPageAsync();
+
+            await _page.AddInitScriptAsync("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})");
         }
 
         public async Task GoDianAsync()
@@ -37,8 +53,27 @@ namespace RpaBot.Bot
             Console.WriteLine($"Cedula : {ids} ingresada");
         }
 
+        //public async Task WaitCaptchaAsync()
+        //{
+        //    Console.WriteLine("Esperando que Cloudflare se resuelva...");
+
+        //    // Espera hasta que aparezca el check verde de Cloudflare
+        //    await _page!.WaitForSelectorAsync(
+        //        "div.cf-turnstile-response, [class*='success']",
+        //        new PageWaitForSelectorOptions { Timeout = 30000 }
+        //    );
+
+        //    Console.WriteLine("Captcha resuelto");
+        //}
+
+        public async Task ClickSearchAsync()
+        {
+            await _page!.ClickAsync("input[name='vistaConsultaEstadoRUT:formConsultaEstadoRUT:btnBuscar']");
+        }
+
         public async Task CloseAsyns()
         {
+            await _context!.CloseAsync();
             await _browser!.CloseAsync();
         }
     }

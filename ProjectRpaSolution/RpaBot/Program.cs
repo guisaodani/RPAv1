@@ -12,8 +12,10 @@ foreach (var ids in ccIds)
     Console.WriteLine($"Procesando cedula : {ids}");
     await bot.GoDianAsync();
     await bot.PutIdAsync(ids);
-    Console.WriteLine("debes resolver el captcha, ya estamos trajando para solucionarlo");
-    Console.ReadLine();
+    await Task.Delay(5000);
+    //await bot.WaitCaptchaAsync();
+    await bot.ClickSearchAsync();
+    await Task.Delay(5000);
 }
 
 Console.WriteLine("Presiona Enter para cerrar...");
