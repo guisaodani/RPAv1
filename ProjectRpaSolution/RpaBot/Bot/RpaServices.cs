@@ -26,7 +26,7 @@ namespace RpaBot.Bot
         public async Task GoDianAsync()
         {
             await _page!.GotoAsync(Settings.UrlDian);
-            await _page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+            await _page.WaitForLoadStateAsync(LoadState.DOMContentLoaded);
             Console.WriteLine("Pagina cargada");
         }
 

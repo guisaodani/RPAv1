@@ -9,6 +9,6 @@ namespace RpaBot.Config
     public class Settings
     {
         public const string UrlDian = "https://muisca.dian.gov.co/WebRutMuisca/DefConsultaEstadoRUT.faces";
-        public const bool ShowBrowser = false;
+        public const bool ShowBrowser = true;
     }
 }
