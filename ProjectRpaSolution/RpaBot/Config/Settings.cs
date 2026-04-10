@@ -10,5 +10,6 @@ namespace RpaBot.Config
     {
         public const string UrlDian = "https://muisca.dian.gov.co/WebRutMuisca/DefConsultaEstadoRUT.faces";
         public const bool ShowBrowser = true;
+        public const string PathExcel = @"C:\projects\RPAv1\CedulasRut.xlsx";
     }
 }

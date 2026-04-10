@@ -30,6 +30,13 @@ namespace RpaBot.Bot
             Console.WriteLine("Pagina cargada");
         }
 
+        public async Task PutIdAsync(string ids)
+        {
+            await _page!.WaitForSelectorAsync("input[name='vistaConsultaEstadoRUT:formConsultaEstadoRUT:numNit']");
+            await _page!.FillAsync("input[name='vistaConsultaEstadoRUT:formConsultaEstadoRUT:numNit']", ids);
+            Console.WriteLine($"Cedula : {ids} ingresada");
+        }
+
         public async Task CloseAsyns()
         {
             await _browser!.CloseAsync();
