@@ -88,6 +88,9 @@ namespace RpaBot.Bot
             if (content.Contains("REGISTRO ACTIVO"))
                 return "registro activo";
 
+            if (content.Contains("REGISTRO CANCELADO"))
+                return "registro cancelado";
+
             if (content.Contains("REGISTRO INACTIVO") || content.Contains(" REGISTRO SUSPENDIDO"))
                 return "registro inactivo o suspendido";
 

@@ -8,6 +8,7 @@ await bot.StarAsync();
 await bot.GoDianAsync();
 
 int row = 2; // empieza en fila 2 (la primera CC)
+var random = new Random();
 
 foreach (var ids in ccIds)
 {
@@ -24,6 +25,9 @@ foreach (var ids in ccIds)
     excel.SaveResult(row, result);
     await bot.ClickLimpiarAsync();
     row++;
+
+    int delay = random.Next(3000, 7000);
+    await Task.Delay(delay);
 }
 
 Console.WriteLine("Proceso terminado.");
