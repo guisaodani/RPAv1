@@ -76,5 +76,29 @@ namespace RpaBot.Bot
             await _context!.CloseAsync();
             await _browser!.CloseAsync();
         }
+
+        public async Task<string> GetResultAsync()
+        {
+            await _page!.WaitForLoadStateAsync(LoadState.DOMContentLoaded);
+            var content = await _page.ContentAsync();
+
+            if (content.Contains("No está inscrito en el RUT"))
+                return "No está inscrito en el RUT";
+
+            if (content.Contains("REGISTRO ACTIVO"))
+                return "registro activo";
+
+            if (content.Contains("REGISTRO INACTIVO") || content.Contains(" REGISTRO SUSPENDIDO"))
+                return "registro inactivo o suspendido";
+
+            return "resultado desconocido";
+        }
+
+        public async Task ClickLimpiarAsync()
+        {
+            await _page!.ClickAsync("input[src='imagenes/es/botones/botextolimpiar.gif']");
+            await _page.WaitForLoadStateAsync(LoadState.DOMContentLoaded);
+            Console.WriteLine("Formulario limpiado");
+        }
     }
 }

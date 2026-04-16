@@ -31,5 +31,16 @@ namespace RpaBot.Bot
             Console.WriteLine($"{ids.Count} Cedulas encontradas en excel");
             return ids;
         }
+
+        public void SaveResult(int row, string result)
+        {
+            ExcelPackage.License.SetNonCommercialPersonal("RpaBot");
+
+            using var package = new ExcelPackage(new FileInfo(Settings.PathExcel));
+            var sheet = package.Workbook.Worksheets[0];
+
+            sheet.Cells[row, 2].Value = result;
+            package.Save();
+        }
     }
 }
